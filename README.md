@@ -1,119 +1,85 @@
-# NetNut Pricing: All Six Residential Tiers, the Real Cost per GB, and the Pay-As-You-Go Route Around the $99 Minimum
+# Proxies para TikTok: cómo elegir la IP correcta para cada cuenta, configurarla sin baneos y cuánto cuesta a escala
 
-NetNut's pricing page answers the "how much" question in about four seconds — $99 a month — and then hands you six GB buckets and an annual-billing toggle that quietly changes every number. If you came here to figure out what a realistic NetNut bill looks like for a 50 GB/month scraping job, the table below is the short version, and it isn't $99.
+Casi nadie busca proxies para TikTok por curiosidad técnica. Se busca porque algo se rompió: tres cuentas empezaron a pedir verificación cada dos días, una cuenta nueva no pasó de las primeras 48 horas, o TikTok Shop cerró sesión sola al cambiar de red. El proxy es la respuesta habitual, pero también es el punto donde más gente mete la pata, porque no todas las IP sirven para lo mismo y TikTok no trata igual a un perfil que navega que a uno que publica o gestiona anuncios.
 
-## NetNut's residential pricing, plan by plan
+La plataforma es mobile-first, está construida alrededor de redes 4G y 5G, y puntúa cada conexión según su reputación. En la práctica, eso significa que la IP que usas forma parte de la identidad de la cuenta, igual que el fingerprint del dispositivo. Si cambias una sin cambiar la otra, o si compartes una IP entre varios perfiles, el sistema tiene motivos para asociarlos.
 
-NetNut sells rotating residential traffic in fixed monthly GB buckets. There's no slider, no pay-as-you-go top-up, and no per-request option on the public page.
+## Por qué TikTok detecta tan rápido un proxy mal elegido
 
-| Plan | Traffic included | Billed monthly | Effective rate | Billed annually (per month) | Effective rate |
+Muchos de los problemas no vienen del proveedor, sino del tipo de IP. Un rango de datacenter se identifica con relativa facilidad como perteneciente a un servidor (AWS, DigitalOcean y similares) y no a una persona conectada desde casa. Como además son baratos, acaban usados por miles de personas para automatizar, lo que ensucia su reputación.
+
+TikTok no se fija solo en la IP. Cruza varios indicios para decidir si dos cuentas pertenecen al mismo operador:
+
+- Dirección IP: todas las cuentas que han entrado desde una misma IP quedan relacionadas entre sí.
+- Fingerprint del navegador o del dispositivo: huellas idénticas apuntan al mismo equipo.
+- Teléfono y correo: reutilizar el mismo número para verificar varias cuentas las vincula.
+- Métodos de pago: en cuentas publicitarias, una misma tarjeta une los paneles de anuncios.
+- Patrones de comportamiento: publicar contenido similar, seguir a los mismos perfiles, usar las mismas etiquetas.
+- Metadatos de vídeo: editar varios vídeos en el mismo dispositivo puede dejar marcas idénticas.
+
+De toda esa lista, lo que sí controlas con un proxy es la parte de red y, en menor medida, la geolocalización declarada. Eso es mucho, pero no lo es todo.
+
+## El bucle de verificación: cuando el proxy está bien y el entorno no
+
+Un síntoma muy repetido: TikTok pide verificación por teléfono o correo, la completas, y a los dos días vuelve a pedirla. La IP está marcada por algo del estilo de "registro excesivo" o "discrepancia de ubicación", pero el origen suele ser más aburrido: el mismo dispositivo o emulador se usa para varias cuentas, los datos de la app se solapan entre inicios de sesión, o la IP dice Berlín mientras el navegador declara zona horaria de Ciudad de México.
+
+Ahí el proxy llega a su límite. Solo cambia la parte de red; el dispositivo sigue siendo el mismo. Por eso los flujos serios combinan dos capas: IP limpia y estable por cuenta, y un entorno de dispositivo aislado (navegador antidetección para el trabajo web, o teléfonos en la nube para el trabajo desde app). Si una de las dos capas se mantiene igual entre cuentas, la otra da igual.
+
+## Qué tipo de proxy necesita cada tipo de cuenta
+
+No hay un "mejor proxy para TikTok" universal. Hay un tipo de IP que encaja mejor con cada tarea.
+
+| Tipo de IP | Nivel de confianza en TikTok | Riesgo de detección | Ideal para | Punto débil |
+| --- | --- | --- | --- | --- |
+| Móvil (4G/5G/LTE) | El más alto, porque las operadoras usan CGNAT y cientos de usuarios reales comparten cada IP | Muy bajo | Cuentas principales, cuentas publicitarias, registro de cuentas nuevas, TikTok Shop | El más caro por GB |
+| Residencial | Alto, parece una conexión doméstica real | Bajo | Gestión diaria de varias cuentas, sesiones largas, contenido | Puede rotar si no fijas la sesión |
+| Residencial premium | Alto, con mejor rendimiento del pool | Bajo | Cuentas de marca, equipos con exigencias de estabilidad | Precio por GB más elevado |
+| Datacenter | Bajo | Muy alto | Verificación de anuncios, pruebas de bajo riesgo, monitoreo de contenido público sin iniciar sesión | TikTok lo marca casi al instante si lo usas para entrar en una cuenta |
+
+Las IP móviles tienen ventaja por una razón concreta: los operadores aplican NAT de nivel de operador, así que una única dirección puede estar compartida por cientos de personas reales. Bloquear esa IP sería bloquear también a usuarios legítimos, y TikTok lo sabe. Esa resistencia es justo lo que estás pagando.
+
+Las residenciales son la alternativa razonable cuando el presupuesto aprieta y el volumen de cuentas no es enorme. Las de datacenter tienen su hueco, pero para tareas donde no inicias sesión en una cuenta: comprobar cómo aparece una campaña desde otro país, revisar la parrilla pública, medir anuncios. Meter una cuenta de producción por un rango de datacenter es la vía rápida a perderla.
+
+## Cuánto cuesta realmente poner proxies a un parque de cuentas
+
+Aquí la mayoría de las guías se quedan en el precio por GB y no explican la cuenta completa. El detalle que cambia el presupuesto es el modelo de facturación.
+
+Con pago por uso, compras tráfico y lo consumes cuando lo necesitas. En DataImpulse, por ejemplo, los GB comprados no caducan y no hay suscripción obligatoria, así que una factura mensual no te obliga a consumir un volumen que no vas a usar. Para un flujo de trabajo con TikTok eso importa, porque el consumo no es lineal: una semana con muchas subidas de vídeo y revisiones de panel gasta mucho más que una semana de solo publicación programada.
+
+Lo segundo es entender que el consumo de TikTok no viene dado por el número de cuentas, sino por lo que haces con ellas. Navegar, subir vídeos y revisar paneles de anuncios mueven mucho más tráfico que una consulta automatizada de datos públicos. Por eso el paquete de entrada de 5 dólares existe y tiene sentido: funciona como test para medir tu propio consumo real por cuenta antes de escalar, en lugar de comprometerte a un terabyte basándote en una estimación.
+
+Hay un tercer factor que casi nadie lee antes de comprar: los recargos por segmentación. La selección o exclusión por país suele venir incluida en la tarifa base. El filtrado más fino (estado, ciudad, código postal, ASN) es donde aparecen los costes extras. Si tu estrategia es "una cuenta por ciudad", ese detalle te va a mover la factura.
+
+## Precios de DataImpulse para trabajar con TikTok
+
+DataImpulse organiza su red en cuatro tipos de proxy, y los precios de entrada son de 5 dólares en los cuatro, lo que permite probar cualquiera de ellos sin arriesgar mucho. La tarifa es por GB, sin cuotas mensuales.
+
+| Tipo de proxy | Tarifa estándar (menos de 1 TB) | Tarifa por volumen | Paquete de entrada | Notas útiles para TikTok | Enlace |
 | --- | --- | --- | --- | --- | --- |
-| Starter | 28 GB | $99/mo | $3.53/GB | $84/mo | $3.00/GB |
-| Advanced | 72 GB | $249/mo | $3.45/GB | $210/mo | $2.93/GB |
-| Production | 150 GB | $499/mo | $3.32/GB | $423/mo | $2.82/GB |
-| Semi-Pro | 350 GB | $999/mo | $2.85/GB | $850/mo | $2.43/GB |
-| Professional | 800 GB | $1,999/mo | $2.49/GB | $1,696/mo | $2.12/GB |
-| Master | 2 TB | $3,750/mo | $1.87/GB | $3,180/mo | $1.59/GB |
+| Residencial | $1/GB | $0.80/GB a partir de 1 TB | $5 por 5 GB | Pool de más de 90M de IP en 195 países; segmentación por país incluida; ciudad, código postal y ASN con recargo al doble | [Ver planes de proxies residenciales](https://bit.ly/dataimPulse) |
+| Datacenter | $0.50/GB | $0.45/GB a partir de 1 TB; tramos de $50 por 100 GB y $450 por 1 TB | $5 por 10 GB | Uptime del 99.9%; sirve para verificación y pruebas, no para iniciar sesión en cuentas | [Ver planes de proxies de datacenter](https://bit.ly/dataimPulse) |
+| Móvil | $2/GB | $1.60/GB a partir de 1 TB; $50 por 25 GB | $5 por 2.5 GB | IP 4G/5G/LTE de operadoras reales; la opción más defendible para cuentas activas | [Ver planes de proxies móviles](https://bit.ly/dataimPulse) |
+| Residencial premium | $5/GB | Precio a medida desde 5 TB | $5 por 1 GB y $50 por 10 GB | Gestor de cuenta dedicado y todas las opciones de segmentación sin recargo | [Ver planes de residencial premium](https://dataimpulse.com/premium-residential-proxies/?aff=86938) |
 
-Those figures come straight from NetNut's own rotating-residential pricing block, which is repeated verbatim across its country and use-case pages. One line above it matters more than it looks: "prices subject to change based on use cases." In other words, the list is a starting point for a conversation, not a checkout price.
+Los cuatro tipos comparten una base técnica que importa para TikTok: soporte de HTTP/HTTPS y SOCKS5, sesiones rotativas y sesiones fijas (sticky) de entre 1 y 120 minutos, con puertos en el rango 10000-20000. Si no defines un intervalo, la sesión fija dura 30 minutos por defecto. También puedes meter el país, la ciudad y el identificador de sesión directamente en el usuario del proxy, lo que simplifica asignar una configuración distinta a cada perfil de navegador.
 
-A quick note if you've seen NetNut quoted at $6/GB or even $29/GB elsewhere. Those numbers float around in comparison posts, and they're usually either a different product line, an older scrape, or a mixed-up entry price. The published block above is the one to anchor on.
+Un dato que conviene tener claro antes de pagar: no hay prueba gratuita. El acceso empieza con una compra mínima de 5 dólares, y los planes de entrada llevan garantía de devolución de 7 días si pagas con tarjeta y has consumido menos del 80% del tráfico. Si pagas en cripto, los planes de entrada no son reembolsables.
 
-## What every NetNut plan includes
+## Cómo configurar el proxy para TikTok, paso a paso
 
-All six tiers come with the same feature set — the only variable is bandwidth:
+El orden importa. Configurar mal el entorno anula el trabajo que haga la IP.
 
-- Unlimited concurrent connections
-- City and state level targeting
-- API access
-- IP whitelisting
-- A dedicated account manager
+1. **Compra el tráfico y elige el tipo de IP.** Para cuentas que van a publicar o gestionar anuncios, móvil o residencial. Datacenter solo para tareas sin sesión iniciada.
+2. **Copia las credenciales** desde el panel: host, puerto, usuario y contraseña.
+3. **Crea un perfil nuevo en tu navegador antidetección** y asigna ahí el proxy. Elige SOCKS5 si está disponible; HTTP/HTTPS también funciona.
+4. **Verifica la conexión** antes de tocar TikTok. El navegador debe mostrar la IP y el país que esperabas.
+5. **Fija la sesión.** Para una cuenta necesitas la misma IP durante todo el tiempo: sesión sticky, no rotativa. La rotación a mitad de sesión es una de las señales más obvias de automatización.
+6. **Alinea el fingerprint con la IP.** Zona horaria igual a la geolocalización del proxy, idioma coherente con el contenido de la cuenta, User-Agent de móvil si estás simulando un usuario de app. Una IP de París con zona horaria de Lima es una bandera roja inmediata.
+7. **Bloquea WebRTC.** Puede filtrar tu IP real aunque el proxy funcione. La mayoría de los navegadores antidetección lo configuran al seleccionar el proxy, pero conviene comprobarlo.
+8. **Un proxy, una cuenta.** No abras dos perfiles de TikTok con la misma IP, ni en pestañas distintas. Si TikTok detecta que dos cuentas acceden desde la misma dirección, la asociación es automática.
 
-That last item explains a chunk of the price. NetNut isn't selling bandwidth to anonymous buyers; it's selling bandwidth plus a named human who'll sit in a remote session with your dev if the integration misbehaves. Whether that's worth $3.53/GB versus $1/GB depends entirely on whether you're the kind of buyer who ever emails support.
+## Errores que arruinan incluso una configuración correcta
 
-NetNut's network pitch is the other half of the story: 85M+ residential IPs across 195+ countries, routing through ISP partnerships rather than peer devices, which the company markets as "one-hop connectivity." The practical claim is lower latency and better session stability than SDK-based pools, because traffic isn't bouncing through someone's idle laptop.
-
-## The three things the pricing page doesn't say out loud
-
-**1. There's no pay-as-you-go below $99.** If your project needs 8 GB this month, you still buy 28 GB. That works out to an effective $12.38/GB for the traffic you actually use. NetNut's entry tier is a floor, not a starting point.
-
-**2. Bandwidth is metered in both directions.** NetNut's billing FAQ is explicit: usage is the sum of data sent *to* and *from* the target site, including request headers, request data, response headers, and response data. If your scraper POSTs fat JSON payloads or pulls large headers, you're paying for the upload side too. That's not unusual in the industry, but it does mean 28 GB is less runway than it sounds.
-
-**3. Whether unused GB rolls over isn't stated on the pricing block.** It's a genuinely important question for anyone with lumpy traffic, and the honest answer is: ask before you sign. NetNut's trial process also runs through sales — you sign up, then contact the team via WhatsApp, Telegram, Skype, email, or live chat with your product type, target domains, use case, and required bandwidth. It's an approval flow, not a self-serve free tier.
-
-One more gap: the public pricing block covers rotating residential only. Static ISP, mobile, and datacenter rates aren't published there — those come out of a sales conversation. Fine if you enjoy sales conversations.
-
-## The annual toggle is worth roughly 11–15%
-
-Comparing the two columns, paying yearly moves the entry plan from $3.53 to $3.00/GB and the 2 TB plan from $1.87 to $1.59/GB. On the Master tier, that's a $6,840 annual difference. It also locks you into 12 months of a fixed bucket, which is the exact opposite of what you want if your scraping volume swings with the calendar.
-
-## A different pricing model: DataImpulse, where traffic doesn't expire
-
-If your reaction to "28 GB minimum, bills monthly, no small plans" is a sigh, the alternative model is worth ten minutes of your time.
-
-DataImpulse prices residential traffic at **$1/GB with a $5 minimum** — you buy 5 GB for $5, and it sits on your account until you use it. Traffic never expires. Buy 1 TB and the rate drops to $0.80/GB; at 5 TB it's $0.70/GB. The pool is 90M+ ethically sourced IPs across 195+ countries, with rotating and sticky sessions, HTTP(S) and SOCKS5, and free country-level targeting. City, ASN, and ZIP filtering on standard residential is billed at double the per-GB rate.
-
-Here's the full set of DataImpulse products, since the residential tier isn't the only line:
-
-| Product | Rate | Minimum purchase | What you get for the minimum | Volume pricing | Get started |
-| --- | --- | --- | --- | --- | --- |
-| Residential | $1/GB | $5 | 5 GB | $0.80/GB at 1 TB, $0.70/GB at 5 TB | Start with 5 GB of residential proxies for $5 |
-| Premium Residential | $5/GB | $5 | 1 GB | $50 for 10 GB; custom from $20,000 at 5 TB+ | See DataImpulse premium residential rates |
-| Mobile | $2/GB | $5 | 2.5 GB | — | Check DataImpulse mobile proxy pricing |
-| Datacenter | $0.50/GB | $5 | 10 GB | — | Compare DataImpulse datacenter plans |
-
-Two details worth knowing before you buy. Premium residential includes country, city, ASN, and ZIP targeting at no extra charge, plus a personal account manager — the tier for people who specifically want the hand-holding NetNut bundles into every plan. And intro-plan purchases come with a 7-day money-back guarantee on card payments, as long as you've used under 80% of the traffic; crypto purchases don't qualify for a refund.
-
-## Same traffic, two very different invoices
-
-This is where "cheap per GB" arguments either survive contact with reality or don't.
-
-| Monthly traffic | NetNut (monthly billing) | DataImpulse | Difference |
-| --- | --- | --- | --- |
-| 28 GB | $99 | $28 | −72% |
-| 72 GB | $249 | $72 | −71% |
-| 150 GB | $499 | $150 | −70% |
-| 350 GB | $999 | $350 | −65% |
-| 800 GB | $1,999 | $800 (1 TB tier) | −60% |
-| 2 TB | $3,750 ($3,180 annual) | ~$1,638 (at $0.80/GB) | −56% |
-
-The gap narrows as volume climbs, but it never closes — NetNut's annual-billed 2 TB rate of $1.59/GB is still roughly double DataImpulse's $0.80/GB tier.
-
-That said, this isn't a like-for-like comparison, and pretending otherwise would be dishonest. NetNut is selling ISP-connected infrastructure with a dedicated account manager attached to every tier, plus published 500B+ monthly routed request volume and a support model built around enterprise onboarding. If your workload genuinely depends on session stability against aggressively protected targets, and your finance team wants an account manager on the invoice, that difference is real and you should pay for it.
-
-## When NetNut's pricing is the right call
-
-- **You consistently burn 800 GB to 2 TB a month and want a vendor relationship**, not a self-serve dashboard. At that volume the per-GB premium is a procurement line item, not a project killer.
-- **You need mobile, ISP static, and residential from one supplier** with one contract and one support thread.
-- **Your traffic is predictable enough that annual prepay makes sense.** The 11–15% discount only pays off if you'd have spent the money anyway.
-- **Compliance or procurement requires a named account manager** and documented onboarding. NetNut is structured for that from day one.
-
-## When it isn't
-
-- **You're below 100 GB a month.** You're paying for 28 GB whether you use 8 or 27, and the effective rate on partially-used buckets climbs fast.
-- **Your workload is seasonal.** A fixed monthly bucket is the wrong instrument for pre-holiday spikes followed by quiet quarters. Non-expiring traffic is the right instrument.
-- **You're still testing.** Buying a $99 bucket to find out whether a provider works on your targets is an expensive experiment when the same test costs $5.
-- **You need flexibility on targeting.** NetNut includes city/state selection in every plan; if you need ASN or ZIP-level filtering at volume, price that out on both sides before deciding.
-
-## Questions people actually ask about NetNut pricing
-
-**Does NetNut have a pay-as-you-go plan?**
-Not on the public pricing page. The smallest published bucket is 28 GB at $99/month, and the platform starts from GB buckets rather than a top-up balance.
-
-**Is there a NetNut free trial?**
-There's a trial, but it's not self-serve. You sign up and then contact the sales team with your product type, target domains, use case, and required bandwidth. Trial accounts are set up case by case.
-
-**Why is NetNut more expensive per GB than budget providers?**
-Three reasons stack up: bucket-based monthly billing means you always buy more than you use at low volumes, ISP partnership routing costs more than SDK-collected pools, and every plan carries a dedicated account manager. You're paying for architecture and service, not just bandwidth.
-
-**Do NetNut prices change?**
-Their own pricing block says "prices subject to change based on use cases." Treat the published list as the starting point of a quote.
-
-**What if my monthly usage is under 30 GB?**
-Then a bucket model is working against you. At $1/GB with a $5 minimum, the same 28 GB costs $28 on a pay-as-you-go model, and the leftover traffic stays on your account instead of evaporating at the end of the billing cycle. 👉 See how DataImpulse's per-GB pricing compares for your volume
-
-## The bottom line
-
-NetNut's pricing is straightforward once you decode it: six GB buckets, $99 to $3,750 per month, roughly 11–15% off if you prepay a year, and a dedicated account manager wrapped into every tier. It's a subscription model with a service layer, aimed at teams with steady, predictable volume.
-
-If that's you, the published rates are reasonable and the annual discount is real. If it isn't — if you're testing, spiking, or sitting under 100 GB a month — you're paying for 28 GB you didn't use and $3.53/GB for traffic that costs $1/GB elsewhere, with no expiry clock running. The $5 entry point makes that comparison cheap to run on your own targets instead of taking anyone's word for it. 👉 Try DataImpulse's 5 GB starter package and price it against your real usage
+- **Repartir cuentas por un mismo rango de IP** del mismo proveedor sin separación real. Aunque las direcciones cambien, el patrón sigue siendo reconocible.
+- **Cambiar de proxy después de crear el panel de anuncios.** El panel queda ligado a una IP; si al siguiente inicio de sesión es otra, salta la alerta.
+- **Mezclar idioma, zona horaria y ubicación de la IP.** La discrepancia de ubicación es una
